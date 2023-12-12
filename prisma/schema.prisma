@@ -16,8 +16,8 @@ model Users{
   updatedAt DateTime @updatedAt @map("updatedAt")
 
   userinfos  UserInfos?
-  posts  Posts[]
-  comments  Comments[]
+  bookings  Bookings[]
+  reviews  Reviews[]
 
   @@map("Users")
 }
@@ -37,44 +37,60 @@ model UserInfos{
   @@map("UserInfos")
 }
 
-model Posts{
-  postId Int @id @default(autoincrement()) @map("postId")
-  UserId    Int?     @map("UserId")
-  title     String  @map("title")
-  content   String  @db.Text() @map("content")
+model Petsitter{
+  sitterId Int @id @default(autoincrement()) @map("sitterId")
+  name     String  @unique @map("name")
+  career  Int  @map("career")
   createdAt DateTime @default(now()) @map("createdAt")
   updatedAt DateTime @updatedAt @map("updatedAt")
 
-  User Users? @relation(fields: [UserId], references: [userId], onDelete : SetNull)
-
-  comments  Comments[]
+  bookings  Bookings[]
   likes  Likes?
 
-  @@map("Posts")
+  @@map("Petsitter")
 }
 
-model Comments{
-  commentId Int @id @default(autoincrement()) @map("commentId")
+model Bookings{
+  bookingId Int @id @default(autoincrement()) @map("bookingId")
   UserId    Int?     @map("UserId")
-  PostId    Int  @map("PostId")
-  comment   String  @map("comment")
+  SitterId    Int     @map("SitterId")
+  title     String  @map("title")
+  content   String  @db.Text() @map("content")
+  bookedAt DateTime @map("bookedAt")
   createdAt DateTime @default(now()) @map("createdAt")
   updatedAt DateTime @updatedAt @map("updatedAt")
 
   User Users? @relation(fields: [UserId], references: [userId], onDelete : SetNull)
-  Post Posts @relation(fields: [PostId], references: [postId], onDelete : Cascade)
+  petsitter Petsitter @relation(fields: [SitterId], references: [sitterId], onDelete : Cascade)
 
-  @@map("Comments")
+  reviews  Reviews[]
+
+  @@map("Bookings")
+}
+
+model Reviews{
+  reviewId Int @id @default(autoincrement()) @map("reviewId")
+  UserId    Int?     @map("UserId")
+  BookingId    Int  @map("BookingId")
+  review   String  @db.Text() @map("review")
+  star   Int  @map("star")
+  createdAt DateTime @default(now()) @map("createdAt")
+  updatedAt DateTime @updatedAt @map("updatedAt")
+
+  User Users? @relation(fields: [UserId], references: [userId], onDelete : SetNull)
+  Booking Bookings @relation(fields: [BookingId], references: [bookingId], onDelete : Cascade)
+
+  @@map("Reviews")
 }
 
 model Likes{
   likeId Int @id @default(autoincrement()) @map("likeId")
-  PostId    Int @unique  @map("PostId")
+  SitterId    Int @unique  @map("SitterId")
   count   Int @default(0)  @map("count")
   createdAt DateTime @default(now()) @map("createdAt")
   updatedAt DateTime @updatedAt @map("updatedAt")
 
-  Post Posts @relation(fields: [PostId], references: [postId], onDelete : Cascade)
+  Petsitter Petsitter @relation(fields: [SitterId], references: [sitterId], onDelete : Cascade)
 
   @@map("Likes")
 }
