@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link href="../style/style.css" rel="stylesheet" />
+    <style>
+      /* 이미지 크기 조절 */
+      #profileImagePreview {
+        max-width: 500px;
+        max-height: 600px;
+        margin-top: 10px;
+      }
+      .profile {
+        width: 400px;
+        height: 400px;
+
+        border-radius: 10%;
+
+        border: 2px solid #f5f5f5;
+
+        background-image: url("../images/img2.png");
+        background-position: center;
+        background-size: cover;
+      }
+    </style>
+    <title>아웃소싱 프로젝트</title>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <h2 class="mb-4">프로필 편집</h2>
+
+          <!-- 프로필 편집 폼 -->
+          <form class="profile-form">
+            <div class="form-group">
+              <div class="profile"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="nickname">닉네임</label>
+              <input type="text" class="form-control" id="nickname" />
+            </div>
+
+            <div class="form-group">
+              <label for="username">사용자 이름</label>
+              <input type="text" class="form-control" id="username" />
+            </div>
+
+            <div class="form-group">
+              <label>성별</label>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="gender"
+                  id="male"
+                  value="male"
+                />
+                <label class="form-check-label" for="male">남성</label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="gender"
+                  id="female"
+                  value="female"
+                />
+                <label class="form-check-label" for="female">여성</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="age">나이</label>
+              <input type="number" class="form-control" id="age" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">저장</button>
+          </form>
+          <!-- 프로필 편집 폼 끝 -->
+        </div>
+      </div>
+    </div>
+    <script>
+      // 이미지 미리보기 함수
+      function previewImage() {
+        const input = document.getElementById("profileImage");
+        const preview = document.getElementById("profileImagePreview");
+        const file = input.files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = function () {
+          preview.src = reader.result;
+        };
+
+        if (file) {
+          reader.readAsDataURL(file);
+        } else {
+          preview.src = "";
+        }
+      }
+    </script>
+  </body>
+</html>

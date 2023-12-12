@@ -1,0 +1,14 @@
+html,
+body {
+  padding-top: 40px; /* 헤더와 내용 간의 간격 조절 */
+  background-color: #f5f5f5;
+}
+
+/* 이서윤체 폰트 적용을 위한 코드 */
+@font-face {
+  font-family: "LeeSeoyun";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
