@@ -66,9 +66,9 @@ export default function (err, req, res, next) {
     errMessage = "status 값은 FOR_SALE 또는 SOLD_OUT만 기입 가능합니다.";
   }
 
-  if (err.message === "NO_PERMISSION_TO_UPDATE_PRODUCT_ERROR") {
+  if (err.message === "NO_PERMISSION_TO_UPDATE_ERROR") {
     statusCode = StatusCodes.BAD_REQUEST;
-    errMessage = "상품을 수정할 권한이 없습니다.";
+    errMessage = "자료를 수정할 권한이 없습니다.";
   }
 
   res.status(statusCode).json({ success: false, errorMessage: errMessage });
