@@ -7,23 +7,14 @@ export class UsersController {
   /** 회원가입 API */
   createUser = async (req, res, next) => {
     try {
-      const { email, nickname, password, confirmPassword, gender, name, age } =
-        req.body;
+      const { email, nickname, password, confirmPassword, gender, name, age } = req.body;
 
-      const user = await this.usersService.createUser(
-        email,
-        nickname,
-        password,
-        confirmPassword,
-        gender,
-        name,
-        age
-      );
+      const user = await this.usersService.createUser(email, nickname, password, confirmPassword, gender, name, age);
 
       return res.status(StatusCodes.CREATED).json({
         success: true,
         message: "회원가입에 성공했습니다.",
-        data: user,
+        data: user
       });
     } catch (err) {
       next(err);
@@ -41,7 +32,42 @@ export class UsersController {
 
       return res.status(StatusCodes.OK).json({
         success: true,
-        message: "로그인에 성공했습니다.",
+        message: "로그인에 성공했습니다."
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  /** 사용자 프로필 상세조회 API */
+  readUser = async (req, res, next) => {
+    try {
+      const { userId } = req.params;
+
+      const user = await this.usersService.readUser(userId);
+
+      return res.status(StatusCodes.OK).json({
+        success: true,
+        message: "프로필 상세정보 조회에 성공했습니다.",
+        data: user
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  /** 사용자 프로필 수정 API */
+  updateUser = async (req, res, next) => {
+    try {
+      const { userId } = req.user;
+      const { userIdParam } = req.params;
+      const { name, nickname, age, gender, profileImage } = req.body;
+
+      const user = await this.usersService.updateUser(userId, userIdParam, name, nickname, age, gender, profileImage);
+
+      return res.status(StatusCodes.OK).json({
+        success: true,
+        message: "프로필 정보를 수정했습니다."
       });
     } catch (err) {
       next(err);
