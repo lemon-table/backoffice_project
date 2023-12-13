@@ -2,15 +2,15 @@ import AuthMiddleware from "../middlewares/auth.middleware.js";
 import express from "express";
 import { BookingsController } from "../controllers/bookings.controllers.js";
 import { BookingsRepository } from "../repositories/bookings.repository.js";
-import { BookingService } from "../services/bookings.service.js";
+import { BookingsService } from "../services/bookings.service.js";
 import { prisma } from "../utils/prisma/index.js";
 
 const router = express.Router();
 
 // 의존성 주입
-const bookingsController = new BookingsController(bookingsService);
-const bookingsService = new BookingService(bookingsRepository)
 const bookingsRepository = new BookingsRepository(prisma);
+const bookingsService = new BookingsService(bookingsRepository);
+const bookingsController = new BookingsController(bookingsService);
 
 
 // 신규 예약 생성
