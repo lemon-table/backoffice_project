@@ -1,18 +1,17 @@
-import { BookingsService } from "../services/bookings.service.js"
 import { StatusCodes } from "../constants/statusCodes.constant.js";
-
-
 export class BookingsController {
 
-    bookingsService = new BookingsService();
+    constructor(bookingsService) {
+        this.bookingsService = bookingsService;
+    }
 
     // 예약 생성
     createBookingController = async (req, res, next) => {
         try {
-            const { UserId } = req.user;
+            const { userId } = req.user;
             const { title, sitterId, content, bookedAt } = req.body;
             const booking = await this.bookingsService.createBookingService(
-                UserId,
+                userId,
                 title,
                 sitterId,
                 content,
@@ -71,11 +70,11 @@ export class BookingsController {
     // 예약 수정
     updateBookingController = async (req, res, next) => {
         try {
-            const { UserId } = req.query;
+            const { userId } = req.query;
             const { bookingId } = req.params;
             const { title, sitterId, content, bookedAt } = req.body;
             const updateBooking = await this.bookingsService.updateBookingService(
-                UserId,
+                userId,
                 bookingId,
                 title,
                 sitterId,
@@ -96,10 +95,10 @@ export class BookingsController {
     // 예약 삭제
     deleteBookingController = async (req, res, next) => {
         try {
-            const { UserId } = req.query;
+            const { userId } = req.query;
             const { bookingId } = req.params;
             const deleteBooking = await this.bookingsService.deleteBookingService(
-                UserId,
+                userId,
                 bookingId);
 
             return res.status(StatusCodes.OK).json({
