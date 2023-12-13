@@ -25,7 +25,7 @@ export class BookingsRepository {
             select: {
                 bookingId: true,
                 title: true,
-                Users: { select: { nickname: true, }, },
+                // users: { select: { nickname: true, }, },
                 createdAt: true,
             },
             orderBy: {
@@ -41,7 +41,7 @@ export class BookingsRepository {
         const bookingDetail = await this.prisma.bookings.findFirst({
             select: {
                 bookingId: true,
-                Users: { select: { nickname: true, }, },
+                // users: { select: { nickname: true, }, },
                 title: true,
                 sitterId: true,
                 content: true,
@@ -54,11 +54,11 @@ export class BookingsRepository {
 
 
     // 예약 수정
-    updateBookingRepo = async (bookingId, userId, title, sitterId, content, bookedAt) => {
+    updateBookingRepo = async (userId, bookingId, title, sitterId, content, bookedAt) => {
         const updateBooking = await this.prisma.bookings.update({
             where: {
-                bookingId: +bookingId,
                 userId: +userId,
+                bookingId: +bookingId,
             },
             data: {
                 title: title,
@@ -72,11 +72,11 @@ export class BookingsRepository {
 
 
     // 예약 삭제
-    deleteBookingRepo = async (bookingId, userId) => {
+    deleteBookingRepo = async (userId, bookingId) => {
         const deleteBooking = await this.prisma.bookings.delete({
             where: {
-                bookingId: +bookingId,
                 userId: +userId,
+                bookingId: +bookingId,
             },
         });
         return deleteBooking;

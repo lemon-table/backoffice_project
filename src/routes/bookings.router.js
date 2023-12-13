@@ -14,19 +14,18 @@ const bookingsController = new BookingsController(bookingsService);
 
 
 // 신규 예약 생성
-router.post("/booking", AuthMiddleware, bookingsController.createBookingController);
+router.post("/", AuthMiddleware, bookingsController.createBookingController);
 
 // 예약 전체 조회
-router.post("/booking", bookingsController.getBookingListController);
+router.get("/", bookingsController.getBookingListController);
 
 // 예약 상세 조회
-router.post("/booking/:bookingId", bookingsController.getBookingDetailController);
+router.get("/:bookingId", bookingsController.getBookingDetailController);
 
 // 예약 수정
-router.post("/booking/:bookingId", AuthMiddleware, bookingsController.updateBookingController);
+router.put("/:bookingId", AuthMiddleware, bookingsController.updateBookingController);
 
 // 예약 삭제
-router.post("/booking/:bookingId", AuthMiddleware, bookingsController.deleteBookingController);
-
+router.delete("/:bookingId", AuthMiddleware, bookingsController.deleteBookingController);
 
 export default router;
