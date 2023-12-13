@@ -33,9 +33,7 @@ export class BookingsController {
     getBookingListController = async (req, res, next) => {
         try {
             const { sort } = req.query;
-            const bookings = await this.bookingsService.getBookingListService(
-                sort
-            );
+            const bookings = await this.bookingsService.getBookingListService(sort);
 
             return res.status(StatusCodes.OK).json({
                 success: true,
@@ -52,9 +50,7 @@ export class BookingsController {
     getBookingDetailController = async (req, res, next) => {
         try {
             const { bookingId } = req.params;
-            const booking = await this.bookingsService.getBookingDetailService(
-                bookingId
-            );
+            const booking = await this.bookingsService.getBookingDetailService(bookingId);
 
             return res.status(StatusCodes.OK).json({
                 success: true,
@@ -70,7 +66,7 @@ export class BookingsController {
     // 예약 수정
     updateBookingController = async (req, res, next) => {
         try {
-            const { userId } = req.query;
+            const { userId } = req.user;
             const { bookingId } = req.params;
             const { title, sitterId, content, bookedAt } = req.body;
             const updateBooking = await this.bookingsService.updateBookingService(
@@ -95,7 +91,7 @@ export class BookingsController {
     // 예약 삭제
     deleteBookingController = async (req, res, next) => {
         try {
-            const { userId } = req.query;
+            const { userId } = req.user;
             const { bookingId } = req.params;
             const deleteBooking = await this.bookingsService.deleteBookingService(
                 userId,
