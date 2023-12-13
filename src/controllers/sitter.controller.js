@@ -22,7 +22,7 @@ export class SittersController {
   //펫시터 전체조회API
   readSitter = async (req, res, next) => {
     try {
-      const sitters = await this.sittersService.readSitters();
+      const sitters = await this.sittersService.readSitter();
       return res
         .status(StatusCodes.OK)
         .json({ success: true, message: "시터 전체 조회에 성공했습니다.", data: sitters });

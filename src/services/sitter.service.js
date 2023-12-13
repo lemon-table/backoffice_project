@@ -34,4 +34,20 @@ export class SittersService {
       };
     });
   };
+
+  //펫시터 상세조회API
+  readOneSitter = async (sitterId) => {
+    const oneSitter = await this.sittersRepository.readOneSitter(sitterId);
+
+    //시터가 존재하지 않을때
+    if (!oneSitter) throw new Error("해당 펫시터를 찾을 수 없습니다.");
+
+    return {
+      sitterId: oneSitter.sitterId,
+      name: oneSitter.name,
+      career: oneSitter.career,
+      createdAt: oneSitter.createdAt,
+      updatedAt: oneSitter.updatedAt
+    };
+  };
 }
