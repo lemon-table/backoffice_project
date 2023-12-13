@@ -3,7 +3,7 @@ export class BookingsController {
 
     constructor(bookingsService) {
         this.bookingsService = bookingsService;
-    }
+    };
 
     // 예약 생성
     createBookingController = async (req, res, next) => {
