@@ -1,8 +1,8 @@
 import express from "express";
 import { prisma } from "../utils/prisma/index.js";
-import { SittersController } from "../controllers/sitter.controller.js";
+import { SittersController } from "../controllers/sitters.controller.js";
 import { SittersService } from "../services/sitter.service.js";
-import { SittersRepository } from "../repositories/sitter.repository.js";
+import { SittersRepository } from "../repositories/sitters.repository.js";
 import authMiddleware from "../middlewares/auth.middleware.js";
 
 const router = express.Router();

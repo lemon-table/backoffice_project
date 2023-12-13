@@ -24,7 +24,7 @@ model Users{
 
 model UserInfos{
   userinfoId Int @id @default(autoincrement()) @map("userinfoId")
-  UserId    Int @unique @map("UserId")
+  userId    Int @unique @map("userId")
   name     String  @map("name")
   gender   Gender  @map("gender")
   age   Int?  @map("age")
@@ -32,12 +32,12 @@ model UserInfos{
   createdAt DateTime @default(now()) @map("createdAt")
   updatedAt DateTime @updatedAt @map("updatedAt")
 
-  User Users @relation(fields: [UserId], references: [userId], onDelete : Cascade)
+  User Users @relation(fields: [userId], references: [userId], onDelete : Cascade)
 
   @@map("UserInfos")
 }
 
-model Petsitter{
+model Petsitters{
   sitterId Int @id @default(autoincrement()) @map("sitterId")
   name     String  @unique @map("name")
   career  Int  @map("career")
@@ -47,21 +47,21 @@ model Petsitter{
   bookings  Bookings[]
   likes  Likes?
 
-  @@map("Petsitter")
+  @@map("Petsitters")
 }
 
 model Bookings{
   bookingId Int @id @default(autoincrement()) @map("bookingId")
-  UserId    Int?     @map("UserId")
-  SitterId    Int     @map("SitterId")
+  userId    Int?     @map("userId")
+  sitterId    Int     @map("sitterId")
   title     String  @map("title")
   content   String  @db.Text() @map("content")
-  bookedAt DateTime @map("bookedAt")
+  bookedAt DateTime @db.Date @map("bookedAt")
   createdAt DateTime @default(now()) @map("createdAt")
   updatedAt DateTime @updatedAt @map("updatedAt")
 
-  User Users? @relation(fields: [UserId], references: [userId], onDelete : SetNull)
-  petsitter Petsitter @relation(fields: [SitterId], references: [sitterId], onDelete : Cascade)
+  User Users? @relation(fields: [userId], references: [userId], onDelete : SetNull)
+  petsitters Petsitters @relation(fields: [sitterId], references: [sitterId], onDelete : Cascade)
 
   reviews  Reviews[]
 
@@ -70,27 +70,27 @@ model Bookings{
 
 model Reviews{
   reviewId Int @id @default(autoincrement()) @map("reviewId")
-  UserId    Int?     @map("UserId")
-  BookingId    Int  @map("BookingId")
+  userId    Int?     @map("userId")
+  bookingId    Int  @map("bookingId")
   review   String  @db.Text() @map("review")
   star   Int  @map("star")
   createdAt DateTime @default(now()) @map("createdAt")
   updatedAt DateTime @updatedAt @map("updatedAt")
 
-  User Users? @relation(fields: [UserId], references: [userId], onDelete : SetNull)
-  Booking Bookings @relation(fields: [BookingId], references: [bookingId], onDelete : Cascade)
+  User Users? @relation(fields: [userId], references: [userId], onDelete : SetNull)
+  Booking Bookings @relation(fields: [bookingId], references: [bookingId], onDelete : Cascade)
 
   @@map("Reviews")
 }
 
 model Likes{
   likeId Int @id @default(autoincrement()) @map("likeId")
-  SitterId    Int @unique  @map("SitterId")
+  sitterId    Int @unique  @map("sitterId")
   count   Int @default(0)  @map("count")
   createdAt DateTime @default(now()) @map("createdAt")
   updatedAt DateTime @updatedAt @map("updatedAt")
 
-  Petsitter Petsitter @relation(fields: [SitterId], references: [sitterId], onDelete : Cascade)
+  Petsitters Petsitters @relation(fields: [sitterId], references: [sitterId], onDelete : Cascade)
 
   @@map("Likes")
 }
