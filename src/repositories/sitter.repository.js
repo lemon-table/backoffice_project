@@ -30,4 +30,21 @@ export class SittersRepository {
     });
     return oneSitter;
   };
+
+  updateSitter = async (sitterId, name, career) => {
+    const updatedsitter = await this.prisma.petsitter.update({
+      where: { sitterId },
+      data: {
+        name,
+        career
+      }
+    });
+    return updatedsitter;
+  };
+
+  deleteSitter = async (sitterId) => {
+    const deletedSitter = await this.prisma.petsitter.delete({
+      where: { sitterId }
+    });
+  };
 }

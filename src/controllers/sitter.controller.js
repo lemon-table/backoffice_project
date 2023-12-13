@@ -45,8 +45,33 @@ export class SittersController {
   };
 
   /**펫시터 정보수정 API */
-  updateSitter = async (req, res, next) => {};
+  updateSitter = async (req, res, next) => {
+    try {
+      const { sitterId } = req.params;
+      const { name, career } = req.body;
+
+      const sitter = await this.sittersService.updateSitter(Number(sitterId), name, career);
+
+      return res.status(OK).json({
+        data: sitter
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
 
   /**펫시터 정보삭제 API */
-  deleteSitter = async (req, res, next) => {};
+  deleteSitter = async (req, res, next) => {
+    try {
+      const { sitterId } = req.params;
+
+      const sitter = await this.sittersService.deleteSitter(Number(sitterId));
+
+      return res.status(OK).json({
+        data: sitter
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
 }
