@@ -12,4 +12,16 @@ const reviewsRepository = new ReviewsRepository(prisma);
 const reviewsService = new ReviewsService(reviewsRepository);
 const reviewsController = new ReviewsController(reviewsService);
 
+/**리뷰 등록 API */
+router.post("/:bookingId", AuthMiddleware, reviewsController.createReview);
+
+/**리뷰 조회 API */
+router.get("/:bookingId", reviewsController.readReviews);
+
+/**리뷰 수정 API */
+router.put("/:bookingId", AuthMiddleware, reviewsController.updateReview);
+
+/**리뷰 삭제 API */
+router.delete("/:bookingId", AuthMiddleware, reviewsController.deleteReview);
+
 export default router;
