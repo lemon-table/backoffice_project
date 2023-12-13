@@ -11,7 +11,10 @@ const usersRepository = new UsersRepository(prisma);
 const usersService = new UsersService(usersRepository);
 const usersController = new UsersController(usersService);
 
+/**회원가입 API */
+router.post("/signup", usersController.createUser);
+
 /**로그인 API */
-router.post("/", usersController.loginUser);
+router.post("/signin", usersController.loginUser);
 
 export default router;
