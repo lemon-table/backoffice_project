@@ -49,10 +49,10 @@ export class BookingsController {
 
 
     // 예약 상세 조회
-    getBookingIdController = async (req, res, next) => {
+    getBookingDetailController = async (req, res, next) => {
         try {
             const { bookingId } = req.params;
-            const booking = await this.bookingsService.getBookingIdService(
+            const booking = await this.bookingsService.getBookingDetailService(
                 bookingId
             );
 

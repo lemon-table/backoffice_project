@@ -20,7 +20,7 @@ router.post("/booking", AuthMiddleware, bookingsController.createBookingControll
 router.post("/booking", bookingsController.getBookingListController);
 
 // 예약 상세 조회
-router.post("/booking/:bookingId", bookingsController.getBookingIdController);
+router.post("/booking/:bookingId", bookingsController.getBookingDetailController);
 
 // 예약 수정
 router.post("/booking/:bookingId", AuthMiddleware, bookingsController.updateBookingController);

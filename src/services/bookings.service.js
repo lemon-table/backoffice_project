@@ -18,7 +18,7 @@ export class BookingService {
         // bookedAt 확인
         if (!bookedAt) throw new Error("BOOKINGDATE_NOT_FOUND_ERROR");
 
-        const booking = await this.bookingRepository.createBooking(
+        const booking = await this.bookingRepository.createBookingRepo(
             userId,
             title,
             sitterId,
@@ -42,7 +42,7 @@ export class BookingService {
         if (sortStr !== null && sortStr !== "desc" && sortStr !== "asc") {
             throw new Error("INVALID_SORT_ERROR");
         };
-        const bookings = await this.bookingRepository.getBooking(sortStr);
+        const bookings = await this.bookingRepository.getBookingsRepo(sortStr);
 
         // 예약 전체 조회 화면에서 글번호, 예약 제목, 고객닉네임, 작성시간 출력 
         const formattedBookings = bookings.map((booking) => ({
@@ -56,11 +56,12 @@ export class BookingService {
 
 
     // 예약 상세 조회
-    getBookingIdService = async (bookingId) => {
-        const booking = await this.bookingRepository.getBookingId(bookingId);
+    getBookingDetailService = async (bookingId) => {
+        const booking = await this.bookingRepository.getBookingDetailRepo(bookingId);
         if (!booking) throw new Error("BOOKING_NOT_FOUND_ERROR");
 
         return {
+            bookingId: booking.bookingId,
             nickname: booking.Users.nickname,
             title: booking.title,
             sitterId: booking.sitterId,
@@ -78,11 +79,12 @@ export class BookingService {
         if (!content) throw new Error("CONTENT_NOT_FOUND_ERROR");
         if (!bookedAt) throw new Error("BOOKINGDATE_NOT_FOUND_ERROR");
 
-        const booking = await this.bookingRepository.updateBooking(bookingId);
+        const booking = await this.bookingRepository.updateBookingRepo(bookingId);
         if (!booking) throw new Error("BOOKING_NOT_FOUND_ERROR");
         if (Number(booking.userId) !== userId) throw new Error("NO_PERMISSION_TO_UPDATE_ERROR");
 
-        const updateBooking = await this.bookingRepository.updateBooking(
+        const updateBooking = await this.bookingRepository.updateBookingRepo(
+            bookingId,
             userId,
             title,
             sitterId,
@@ -95,11 +97,11 @@ export class BookingService {
 
     // 예약 삭제
     deleteBookingService = async (bookingId, userId) => {
-        const booking = await this.bookingRepository.deleteBooking(bookingId);
+        const booking = await this.bookingRepository.deleteBookingRepo(bookingId);
         if (!booking) throw new Error("BOOKING_NOT_FOUND_ERROR");
         if (Number(booking.userId) !== userId) throw new Error("NO_PERMISSION_TO_UPDATE_ERROR");
 
-        const deleteBooking = await this.bookingRepository.deleteBooking(bookingId, userId);
+        const deleteBooking = await this.bookingRepository.deleteBookingRepo(bookingId, userId);
 
         return { deleteBooking };
     };
