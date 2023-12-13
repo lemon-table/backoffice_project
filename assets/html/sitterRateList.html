@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <title>펫시터 목록 페이지</title>
+    <style>
+      body {
+        padding-top: 40px;
+        background-color: #f5f5f5;
+      }
+      .container {
+        text-align: center;
+        position: relative;
+      }
+      .sort-buttons {
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header class="text-center my-5">
+        <h1>펫시터 목록</h1>
+      </header>
+
+      <!-- 정렬 버튼 -->
+      <div class="sort-buttons">
+        <button class="btn btn-outline-secondary" id="sort-by-name">이름순</button>
+        <button class="btn btn-outline-secondary" id="sort-by-popularity">인기순</button>
+      </div>
+
+      <!-- 펫시터 목록 테이블 -->
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">이름</th>
+            <th scope="col">평점</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>김펫시터</td>
+            <td>⭐⭐⭐⭐</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>이펫시터</td>
+            <td>⭐⭐⭐⭐⭐</td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td>박펫시터</td>
+            <td>⭐⭐⭐</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      // 여기에 정렬 버튼에 대한 JavaScript 로직을 추가할 수 있습니다.
+    </script>
+  </body>
+</html>
