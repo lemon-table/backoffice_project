@@ -39,13 +39,13 @@ model UserInfos{
 
 model Petsitters{
   sitterId Int @id @default(autoincrement()) @map("sitterId")
-  name     String  @unique @map("name")
+  name     String  @map("name")
   career  Int  @map("career")
   createdAt DateTime @default(now()) @map("createdAt")
   updatedAt DateTime @updatedAt @map("updatedAt")
 
   bookings  Bookings[]
-  likes  Likes?
+  likes  Likes[]
 
   @@map("Petsitters")
 }
@@ -85,7 +85,7 @@ model Reviews{
 
 model Likes{
   likeId Int @id @default(autoincrement()) @map("likeId")
-  sitterId    Int @unique  @map("sitterId")
+  sitterId    Int   @map("sitterId")
   count   Int @default(0)  @map("count")
   createdAt DateTime @default(now()) @map("createdAt")
   updatedAt DateTime @updatedAt @map("updatedAt")

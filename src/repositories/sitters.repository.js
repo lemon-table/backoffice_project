@@ -5,7 +5,7 @@ export class SittersRepository {
 
   createSitter = async (name, career) => {
     try {
-      const createdSitter = await this.prisma.petsitter.create({
+      const createdSitter = await this.prisma.petsitters.create({
         data: {
           name,
           career
@@ -20,14 +20,31 @@ export class SittersRepository {
   };
 
   readAllSitters = async () => {
-    const allSitters = await this.prisma.petsitter.findMany();
+    const allSitters = await this.prisma.petsitters.findMany();
     return allSitters;
   };
 
   readOneSitter = async (sitterId) => {
-    const oneSitter = await this.prisma.petsitter.findUnique({
+    const oneSitter = await this.prisma.petsitters.findUnique({
       where: { sitterId }
     });
     return oneSitter;
+  };
+
+  updateSitter = async (sitterId, name, career) => {
+    const updatedsitter = await this.prisma.petsitters.update({
+      where: { sitterId },
+      data: {
+        name,
+        career
+      }
+    });
+    return updatedsitter;
+  };
+
+  deleteSitter = async (sitterId) => {
+    const deletedSitter = await this.prisma.petsitters.delete({
+      where: { sitterId }
+    });
   };
 }
