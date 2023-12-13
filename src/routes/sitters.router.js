@@ -22,9 +22,9 @@ router.get("/", sittersController.readSitter);
 router.get("/:sitterId", sittersController.readOneSitter);
 
 /**펫시터 정보수정 API */
-router.put("/:sitterId", authMiddleware, sittersController.updateSitter);
+router.put("/:sitterId", sittersController.updateSitter);
 
 /**펫시터 정보삭제 API */
-router.delete("/:sitterId", authMiddleware, sittersController.deleteSitter);
+router.delete("/:sitterId", sittersController.deleteSitter);
 
 export default router;
