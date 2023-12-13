@@ -52,7 +52,9 @@ export class SittersController {
 
       const sitter = await this.sittersService.updateSitter(Number(sitterId), name, career);
 
-      return res.status(OK).json({
+      return res.status(StatusCodes.OK).json({
+        success: true,
+        message: "해당 시터 정보가 수정되었습니다.",
         data: sitter
       });
     } catch (err) {
@@ -67,7 +69,9 @@ export class SittersController {
 
       const sitter = await this.sittersService.deleteSitter(Number(sitterId));
 
-      return res.status(OK).json({
+      return res.status(StatusCodes.OK).json({
+        success: true,
+        message: "해당 시터 정보가 삭제되었습니다.",
         data: sitter
       });
     } catch (err) {
