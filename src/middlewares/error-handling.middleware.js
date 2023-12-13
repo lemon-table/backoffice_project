@@ -83,11 +83,23 @@ export default function (err, req, res, next) {
 
   if (err.message === "BOOKING_NOT_FOUND_ERROR") {
     statusCode = StatusCodes.BAD_REQUEST;
-    errMessage = "예약이 존재하지 않습니다."
+    errMessage = "예약이 존재하지 않습니다.";
   }
 
+  if (err.message === "REVIEW_NOT_FOUND_ERROR") {
+    statusCode = StatusCodes.BAD_REQUEST;
+    errMessage = "리뷰가 없습니다.";
+  }
 
+  if (err.message === "STAR_NOT_FOUND_ERROR") {
+    statusCode = StatusCodes.BAD_REQUEST;
+    errMessage = "평점이 없습니다.";
+  }
 
+  if (err.message === "REVIEWID_NOT_FOUND_ERROR") {
+    statusCode = StatusCodes.BAD_REQUEST;
+    errMessage = "리뷰 ID가 없습니다.";
+  }
 
   res.status(statusCode).json({ success: false, errorMessage: errMessage });
 }
