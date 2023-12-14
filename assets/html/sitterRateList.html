@@ -37,34 +37,73 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">이름</th>
-            <th scope="col">평점</th>
+            <th scope="col">경력</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>김펫시터</td>
-            <td>⭐⭐⭐⭐</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>이펫시터</td>
-            <td>⭐⭐⭐⭐⭐</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>박펫시터</td>
-            <td>⭐⭐⭐</td>
-          </tr>
-        </tbody>
+        <tbody></tbody>
       </table>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
       // 여기에 정렬 버튼에 대한 JavaScript 로직을 추가할 수 있습니다.
+    </script>
+    <script>
+      $(document).ready(function () {
+        let sitters = []; // 펫시터 데이터를 저장할 배열
+
+        // 펫시터 목록을 불러오는 함수
+        function loadSitters() {
+          $.ajax({
+            url: "http://localhost:4002/api/sitter/",
+            type: "GET",
+            success: function (response) {
+              if (response.success) {
+                sitters = response.data;
+                displaySitters(sitters);
+              }
+            },
+            error: function () {
+              alert("펫시터 목록을 불러오는데 실패했습니다.");
+            }
+          });
+        }
+
+        // 펫시터 목록을 표시하는 함수
+        function displaySitters(data) {
+          $("table tbody").empty(); // 테이블 초기화
+          data.forEach(function (sitter, index) {
+            let stars = "";
+            for (let i = 0; i < sitter.career; i++) {
+              stars += "⭐";
+            }
+            const sitterRow = `
+        <tr>
+          <th scope="row">${index + 1}</th>
+          <td>${sitter.name}</td>
+          <td>${stars}</td>
+        </tr>`;
+            $("table tbody").append(sitterRow);
+          });
+        }
+
+        // 이름순 정렬
+        $("#sort-by-name").click(function () {
+          sitters.sort((a, b) => a.name.localeCompare(b.name));
+          displaySitters(sitters);
+        });
+
+        // 인기순(경력순) 정렬
+        $("#sort-by-popularity").click(function () {
+          sitters.sort((a, b) => b.career - a.career);
+          displaySitters(sitters);
+        });
+
+        // 페이지 로드 시 펫시터 목록 불러오기
+        loadSitters();
+      });
     </script>
   </body>
 </html>
