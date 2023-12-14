@@ -47,7 +47,7 @@ window.addEventListener("load", async (event) => {
       const genderInputs = document.querySelectorAll('input[name="gender"]');
       const ageInput = document.getElementById("age");
 
-      nicknameInput.value = responseData.data.user.User.nickname;
+      nicknameInput.value = responseData.data.user.users.nickname;
       usernameInput.value = responseData.data.user.name;
       ageInput.value = responseData.data.user.age;
 

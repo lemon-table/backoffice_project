@@ -44,7 +44,7 @@ export class UsersRepository {
         age: true,
         profileImage: true,
         createdAt: true,
-        User: {
+        users: {
           select: {
             nickname: true
           }
