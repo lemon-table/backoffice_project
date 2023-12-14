@@ -3,10 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -40,7 +37,7 @@
           <h2 class="mb-4">프로필 편집</h2>
 
           <!-- 프로필 편집 폼 -->
-          <form class="profile-form">
+          <form class="profile-form" id="profileForm" method="post">
             <div class="form-group">
               <div class="profile"></div>
             </div>
@@ -58,24 +55,12 @@
             <div class="form-group">
               <label>성별</label>
               <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="gender"
-                  id="male"
-                  value="male"
-                />
-                <label class="form-check-label" for="male">남성</label>
+                <input class="form-check-input" type="radio" name="gender" id="male" value="M" />
+                <label class="form-check-label" for="M">남성</label>
               </div>
               <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="gender"
-                  id="female"
-                  value="female"
-                />
-                <label class="form-check-label" for="female">여성</label>
+                <input class="form-check-input" type="radio" name="gender" id="female" value="W" />
+                <label class="form-check-label" for="W">여성</label>
               </div>
             </div>
 
@@ -109,5 +94,6 @@
         }
       }
     </script>
+    <script type="module" src="/script/profile.js"></script>
   </body>
 </html>
