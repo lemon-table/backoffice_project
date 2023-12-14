@@ -1,6 +1,7 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import dotEnv from "dotenv";
+import cors from "cors";
 import router from "./routes/index.js";
 import LogMiddleware from "./middlewares/log.middleware.js";
 import ErrorHandlingMiddleware from "./middlewares/error-handling.middleware.js";
@@ -11,6 +12,7 @@ dotEnv.config();
 const app = express();
 const port = process.env.SERVER_PORT;
 
+app.use(cors());
 app.use(LogMiddleware);
 app.use(express.json());
 app.use(cookieParser());
