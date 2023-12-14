@@ -36,6 +36,20 @@ export class UsersRepository {
 
   readUser = async (userId) => {
     const user = await this.prisma.userInfos.findUnique({
+      select: {
+        userinfoId: true,
+        userId: true,
+        name: true,
+        gender: true,
+        age: true,
+        profileImage: true,
+        createdAt: true,
+        User: {
+          select: {
+            nickname: true
+          }
+        }
+      },
       where: { userId: +userId }
     });
 
@@ -56,7 +70,7 @@ export class UsersRepository {
       where: { userId: +userId },
       data: {
         name,
-        age,
+        age: +age,
         gender,
         profileImage
       }
