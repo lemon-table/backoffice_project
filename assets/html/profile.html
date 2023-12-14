@@ -70,6 +70,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">저장</button>
+            <button type="button" class="btn btn-secondary" id="cancelBtn">취소</button>
           </form>
           <!-- 프로필 편집 폼 끝 -->
         </div>
@@ -95,5 +96,10 @@
       }
     </script>
     <script type="module" src="/script/profile.js"></script>
+    <script>
+      document.getElementById("cancelBtn").addEventListener("click", function () {
+        location.href = "main.html";
+      });
+    </script>
   </body>
 </html>
