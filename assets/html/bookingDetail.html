@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../style/bootstrap-datepicker.css" />
     <title>예약 상세 페이지</title>
     <style>
       body {
@@ -25,7 +26,7 @@
   <body>
     <div class="container">
       <header class="text-center my-5">
-        <h1>~~님의 예약 상세 페이지</h1>
+        <h1 id="headerTitle"></h1>
       </header>
 
       <!-- 예약 상세 폼 -->
@@ -36,15 +37,13 @@
         </div>
         <div class="form-group">
           <label for="reservation-date">예약일자</label>
-          <input type="date" class="form-control" id="reservation-date" />
+          <div class="form-floating mb-4 d-flex">
+            <input type="text" class="datepicker_input form-control border-2" id="reservation-date" />
+          </div>
         </div>
         <div class="form-group">
           <label for="sitter-select">펫시터 선택</label>
-          <select class="form-control" id="sitter-select">
-            <option>펫시터1</option>
-            <option>펫시터2</option>
-            <option>펫시터3</option>
-          </select>
+          <select class="form-control" id="sitter-select"></select>
         </div>
         <div class="form-group">
           <label for="reservation-content">예약 내용</label>
@@ -55,13 +54,16 @@
             rows="5"
           ></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">저장</button>
-        <button type="button" class="btn btn-secondary">취소</button>
+        <button type="submit" class="btn btn-primary" id="save-button">저장</button>
+        <button type="button" class="btn btn-secondary" id="cancel-button">취소</button>
       </form>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="../script/bootstrap-datepicker.js"></script>
+    <script src="../script/bootstrap-datepicker.ko.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script type="module" src="/script/bookingDetail.js"></script>
   </body>
 </html>
