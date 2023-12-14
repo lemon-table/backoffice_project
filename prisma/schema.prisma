@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Users{
+model users{
   userId Int @id @default(autoincrement()) @map("userId")
   email     String  @unique @map("email")
   nickname  String  @map("nickname")
@@ -15,14 +15,14 @@ model Users{
   createdAt DateTime @default(now()) @map("createdAt")
   updatedAt DateTime @updatedAt @map("updatedAt")
 
-  userinfos  UserInfos?
-  bookings  Bookings[]
-  reviews  Reviews[]
+  userinfos  userInfos?
+  bookings  bookings[]
+  reviews  reviews[]
 
-  @@map("Users")
+  @@map("users")
 }
 
-model UserInfos{
+model userInfos{
   userinfoId Int @id @default(autoincrement()) @map("userinfoId")
   userId    Int @unique @map("userId")
   name     String  @map("name")
@@ -32,25 +32,25 @@ model UserInfos{
   createdAt DateTime @default(now()) @map("createdAt")
   updatedAt DateTime @updatedAt @map("updatedAt")
 
-  User Users @relation(fields: [userId], references: [userId], onDelete : Cascade)
+  users users @relation(fields: [userId], references: [userId], onDelete : Cascade)
 
-  @@map("UserInfos")
+  @@map("userInfos")
 }
 
-model Petsitters{
+model petsitters{
   sitterId Int @id @default(autoincrement()) @map("sitterId")
   name     String  @map("name")
   career  Int  @map("career")
   createdAt DateTime @default(now()) @map("createdAt")
   updatedAt DateTime @updatedAt @map("updatedAt")
 
-  bookings  Bookings[]
-  likes  Likes[]
+  bookings  bookings[]
+  likes  likes[]
 
-  @@map("Petsitters")
+  @@map("petsitters")
 }
 
-model Bookings{
+model bookings{
   bookingId Int @id @default(autoincrement()) @map("bookingId")
   userId    Int?     @map("userId")
   sitterId    Int     @map("sitterId")
@@ -60,15 +60,15 @@ model Bookings{
   createdAt DateTime @default(now()) @map("createdAt")
   updatedAt DateTime @updatedAt @map("updatedAt")
 
-  User Users? @relation(fields: [userId], references: [userId], onDelete : SetNull)
-  petsitters Petsitters @relation(fields: [sitterId], references: [sitterId], onDelete : Cascade)
+  users users? @relation(fields: [userId], references: [userId], onDelete : SetNull)
+  petsitters petsitters @relation(fields: [sitterId], references: [sitterId], onDelete : Cascade)
 
-  reviews  Reviews[]
+  reviews  reviews[]
 
-  @@map("Bookings")
+  @@map("bookings")
 }
 
-model Reviews{
+model reviews{
   reviewId Int @id @default(autoincrement()) @map("reviewId")
   userId    Int?     @map("userId")
   bookingId    Int  @map("bookingId")
@@ -77,22 +77,22 @@ model Reviews{
   createdAt DateTime @default(now()) @map("createdAt")
   updatedAt DateTime @updatedAt @map("updatedAt")
 
-  User Users? @relation(fields: [userId], references: [userId], onDelete : SetNull)
-  Booking Bookings @relation(fields: [bookingId], references: [bookingId], onDelete : Cascade)
+  users users? @relation(fields: [userId], references: [userId], onDelete : SetNull)
+  bookings bookings @relation(fields: [bookingId], references: [bookingId], onDelete : Cascade)
 
-  @@map("Reviews")
+  @@map("reviews")
 }
 
-model Likes{
+model likes{
   likeId Int @id @default(autoincrement()) @map("likeId")
   sitterId    Int   @map("sitterId")
   count   Int @default(0)  @map("count")
   createdAt DateTime @default(now()) @map("createdAt")
   updatedAt DateTime @updatedAt @map("updatedAt")
 
-  Petsitters Petsitters @relation(fields: [sitterId], references: [sitterId], onDelete : Cascade)
+  petsitters petsitters @relation(fields: [sitterId], references: [sitterId], onDelete : Cascade)
 
-  @@map("Likes")
+  @@map("likes")
 }
 
 enum Status {

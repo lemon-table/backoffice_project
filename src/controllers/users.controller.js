@@ -73,4 +73,15 @@ export class UsersController {
       next(err);
     }
   };
+
+  /** userId 가져오는 API */
+  getUserId = async (req, res, next) => {
+    try {
+      const { userId } = req.user;
+      console.log("server userId:" + userId);
+      return res.json({ user: userId });
+    } catch (err) {
+      next(err);
+    }
+  };
 }
