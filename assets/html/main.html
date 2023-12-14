@@ -63,14 +63,12 @@
   </div>
 
   <script>
-
-
-
     $(document).ready(function () {
       function loadBookingList() {
         $.ajax({
           url: "http://localhost:4002/api/booking/",
           type: "GET",
+          data: { sort: "asc" }, // 오름차순
           success: function (response) {
             if (response.success) {
               displayBookings(response.data.formattedBookings);
@@ -91,14 +89,13 @@
           var booking = bookings[i];
           var row = "<tr>" +
             "<th scope='row'>" + (i + 1) + "</th>"
-            + "<td><a href='post" + booking.bookingId
-            + ".html'>" + booking.title + "</a></td>"
+            + "<td><a href='serviceDetail.html?bookingId=" + booking.bookingId
+            + "'>" + booking.title + "</a></td>"
             + "<td>" + booking.createdAt + "</td>"
             + "</tr>";
           tableBody.append(row);
         }
       }
-
       // 페이지 로드 시 예약 목록 불러오기
       loadBookingList();
 
