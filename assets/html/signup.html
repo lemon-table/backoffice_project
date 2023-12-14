@@ -3,10 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -16,96 +13,45 @@
   <body>
     <main class="form-signin">
       <form id="registrationForm" method="post">
-        <img
-          class="mb-4"
-          src="../images/rtan.png"
-          alt=""
-          width="72"
-          height="72"
-        />
+        <img class="mb-4" src="../images/rtan.png" alt="" width="72" height="72" />
         <h1 class="h3 mb-3 fw-normal">회원가입</h1>
 
         <div class="form-floating">
-          <input
-            type="text"
-            class="form-control"
-            id="email"
-            placeholder="이메일"
-          />
+          <input type="text" class="form-control" id="email" placeholder="이메일" />
         </div>
         <div class="form-floating">
-          <input
-            type="password"
-            class="form-control"
-            id="password"
-            placeholder="비밀번호"
-          />
+          <input type="password" class="form-control" id="password" placeholder="비밀번호" />
         </div>
         <div class="form-floating">
-          <input
-            type="password"
-            class="form-control"
-            id="passwordConfirm"
-            placeholder="비밀번호 확인"
-          />
+          <input type="password" class="form-control" id="passwordConfirm" placeholder="비밀번호 확인" />
         </div>
         <div class="form-floating">
-          <input
-            type="text"
-            class="form-control"
-            id="nickname"
-            placeholder="닉네임"
-          />
+          <input type="text" class="form-control" id="nickname" placeholder="닉네임" />
         </div>
 
         <!-- 추가된 부분 -->
         <div class="form-check form-check-inline mt-3">
           <label class="form-check-label">성별&nbsp;&nbsp;&nbsp;</label>
-          <input
-            class="form-check-input"
-            type="radio"
-            name="gender"
-            id="male"
-            value="M"
-            checked
-          />
+          <input class="form-check-input" type="radio" name="gender" id="male" value="M" checked />
           <label class="form-check-label" for="M">남성</label>
         </div>
         <div class="form-check form-check-inline">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="gender"
-            id="female"
-            value="female"
-          />
+          <input class="form-check-input" type="radio" name="gender" id="female" value="female" />
           <label class="form-check-label" for="W">여성</label>
         </div>
 
         <div class="form-floating mt-3">
-          <input
-            type="text"
-            class="form-control"
-            id="name"
-            placeholder="이름"
-          />
+          <input type="text" class="form-control" id="name" placeholder="이름" />
         </div>
         <div class="form-floating">
-          <input
-            type="number"
-            class="form-control"
-            id="age"
-            placeholder="나이"
-          />
+          <input type="number" class="form-control" id="age" placeholder="나이" />
         </div>
         <!-- 추가된 부분 끝 -->
 
-        <button class="w-100 btn btn-lg btn-primary" type="submit">
-          가입완료
-        </button>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">가입완료</button>
         <p class="mt-5 mb-3 text-muted">&copy; TEAMSPARTA</p>
       </form>
     </main>
-    <script src="../script/users.js"></script>
+    <script src="../script/signup.js"></script>
   </body>
 </html>
