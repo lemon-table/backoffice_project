@@ -43,11 +43,10 @@ export class BookingsService {
         };
         const bookings = await this.bookingsRepository.getBookingsRepo(sortStr);
 
-        // 예약 전체 조회 화면에서 글번호, 예약 제목, 고객닉네임, 작성시간 출력 
+        // 예약 전체 조회 화면에서 글번호, 예약 제목, 작성시간 출력 
         const formattedBookings = bookings.map((booking) => ({
             bookingId: booking.bookingId,
             title: booking.title,
-            // nickname: booking.users.nickname,
             createdAt: booking.createdAt,
         }));
         return { formattedBookings };
@@ -57,11 +56,12 @@ export class BookingsService {
     // 예약 상세 조회
     getBookingDetailService = async (bookingId) => {
         const booking = await this.bookingsRepository.getBookingDetailRepo(bookingId);
+        console.log({ booking });
         if (!booking) throw new Error("BOOKING_NOT_FOUND_ERROR");
 
         return {
             bookingId: booking.bookingId,
-            // nickname: booking.users.nickname,
+            nickname: booking.User.nickname,
             title: booking.title,
             sitterId: booking.sitterId,
             content: booking.content,
@@ -78,9 +78,9 @@ export class BookingsService {
         if (!content) throw new Error("CONTENT_NOT_FOUND_ERROR");
         if (!bookedAt) throw new Error("BOOKINGDATE_NOT_FOUND_ERROR");
 
-        // const booking = await this.bookingsRepository.updateBookingRepo(bookingId);
-        // if (!booking) throw new Error("BOOKING_NOT_FOUND_ERROR");
-        // if (Number(booking.userId) !== userId) throw new Error("NO_PERMISSION_TO_UPDATE_ERROR");
+        const booking = await this.bookingsRepository.getBookingDetailRepo(bookingId);
+        if (!booking) throw new Error("BOOKING_NOT_FOUND_ERROR");
+        if (booking.userId !== +userId) throw new Error("NO_PERMISSION_TO_UPDATE_ERROR");
 
         const updateBooking = await this.bookingsRepository.updateBookingRepo(
             userId,
@@ -96,9 +96,9 @@ export class BookingsService {
 
     // 예약 삭제
     deleteBookingService = async (userId, bookingId) => {
-        // const booking = await this.bookingsRepository.deleteBookingRepo(bookingId);
-        // if (!booking) throw new Error("BOOKING_NOT_FOUND_ERROR");
-        // if (Number(booking.userId) !== userId) throw new Error("NO_PERMISSION_TO_UPDATE_ERROR");
+        const booking = await this.bookingsRepository.getBookingDetailRepo(bookingId);
+        if (!booking) throw new Error("BOOKING_NOT_FOUND_ERROR");
+        if (booking.userId !== +userId) throw new Error("NO_PERMISSION_TO_UPDATE_ERROR");
 
         const deleteBooking = await this.bookingsRepository.deleteBookingRepo(userId, bookingId);
 

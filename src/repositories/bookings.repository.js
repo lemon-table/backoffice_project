@@ -25,7 +25,6 @@ export class BookingsRepository {
             select: {
                 bookingId: true,
                 title: true,
-                // users: { select: { nickname: true, }, },
                 createdAt: true,
             },
             orderBy: {
@@ -41,7 +40,8 @@ export class BookingsRepository {
         const bookingDetail = await this.prisma.bookings.findFirst({
             select: {
                 bookingId: true,
-                // users: { select: { nickname: true, }, },
+                userId: true,
+                User: { select: { nickname: true, }, },
                 title: true,
                 sitterId: true,
                 content: true,
