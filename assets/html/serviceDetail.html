@@ -69,24 +69,73 @@
       </form>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
+      // $(document).ready(function () {
+      //   // 사용자 정보 가져오기 API 호출
+      //   $.ajax({
+      //     url: "/user",
+      //     type: "GET",
+      //     success: function (response) {
+      //       // 사용자 이름으로 페이지 제목 설정
+      //       $("#user-name").text(response.nickname + "님의 리뷰 작성 페이지");
+      //     },
+      //     error: function () {
+      //       alert("사용자 정보를 가져오는데 실패했습니다.");
+      //     }
+      //   });
+      // });
       $(document).ready(function () {
-        // 사용자 정보 가져오기 API 호출
-        $.ajax({
-          url: "/user",
-          type: "GET",
-          success: function (response) {
-            // 사용자 이름으로 페이지 제목 설정
-            $("#user-name").text(response.nickname + "님의 리뷰 작성 페이지");
-          },
-          error: function () {
-            alert("사용자 정보를 가져오는데 실패했습니다.");
-          }
-        });
+        // 예약 정보를 불러오는 함수
+        function loadBookingInfo(bookingId) {
+          $.ajax({
+            url: `http://localhost:4002/api/booking/${bookingId}`,
+            type: "GET",
+            success: function (bookingResponse) {
+              // 날짜 형식 변환
+              const bookedDate = new Date(bookingResponse.data.bookedAt);
+              const formattedDate = bookedDate.toLocaleDateString("ko-KR");
+
+              // 수정된 데이터 접근 방식
+              $("#reservation-title").val(bookingResponse.data.title);
+              $("#reservation-date").val(formattedDate);
+              $("#reservation-content").val(bookingResponse.data.content);
+
+              console.log("sitterId:", bookingResponse.data.sitterId); // 여기에서 sitterId 값을 확인
+              // 올바른 sitterId 값 추출
+              const sitterId = bookingResponse.data.sitterId;
+              console.log("sitterId:", sitterId); // 수정된 sitterId 확인
+
+              // 펫시터 정보 불러오기
+              loadSitterInfo(sitterId);
+            },
+            error: function () {
+              alert("예약 정보를 불러오는데 실패했습니다.");
+            }
+          });
+        }
+
+        // 펫시터 정보를 불러오는 함수
+        function loadSitterInfo(sitterId) {
+          $.ajax({
+            url: `http://localhost:4002/api/sitter/${sitterId}`,
+            type: "GET",
+            success: function (sitterResponse) {
+              console.log("sitterResponse:", sitterResponse);
+              // 펫시터 이름 표시
+              $("#sitter-name").val(sitterResponse.data.name);
+            },
+            error: function () {
+              alert("펫시터 정보를 불러오는데 실패했습니다.");
+            }
+          });
+        }
+
+        // 페이지 로드 시 예약 정보 불러오기
+        loadBookingInfo("2"); // 예약 ID는 동적으로 설정해야 함
       });
     </script>
   </body>
