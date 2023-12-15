@@ -5,7 +5,7 @@ export class ReviewsService {
 
   createReview = async (userId, bookingId, review, star) => {
     // 사용자ID 체크
-    if (!updateReviewserId) throw new Error("USER_ID_NOT_FOUND_ERROR");
+    if (!userId) throw new Error("USER_ID_NOT_FOUND_ERROR");
     // 리뷰글 체크
     if (!review) throw new Error("REVIEW_NOT_FOUND_ERROR");
     // 평점 체크
