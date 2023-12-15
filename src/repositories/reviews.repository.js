@@ -25,6 +25,7 @@ export class ReviewsRepository {
 
   readReviews = async (bookingId) => {
     const readReviews = await this.prisma.reviews.findMany({
+      where: { bookingId: +bookingId }, // bookingId 기반 필터링
       select: {
         reviewId: true,
         userId: true,
@@ -32,7 +33,7 @@ export class ReviewsRepository {
         review: true,
         star: true,
         createdAt: true,
-        User: {
+        users: {
           select: {
             nickname: true
           }
@@ -54,7 +55,7 @@ export class ReviewsRepository {
         review: true,
         star: true,
         createdAt: true,
-        User: {
+        user: {
           select: {
             nickname: true
           }
