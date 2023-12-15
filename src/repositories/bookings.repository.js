@@ -39,7 +39,7 @@ export class BookingsRepository {
       select: {
         bookingId: true,
         userId: true,
-        User: { select: { nickname: true } },
+        users: { select: { nickname: true } },
         title: true,
         sitterId: true,
         content: true,
