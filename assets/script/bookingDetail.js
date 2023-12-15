@@ -45,10 +45,9 @@ async function getpetSitter() {
 }
 
 /** 예약일자 리스트 가져오기 */
-
-async function getBookedAtList() {
+async function getBookedAtList(sitterId) {
   try {
-    const response = await fetch("http://localhost:4002/api/booking", {
+    const response = await fetch("http://localhost:4002/api/booking/sitter/" + sitterId, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -59,13 +58,49 @@ async function getBookedAtList() {
     }
 
     const bookedAtData = await response.json();
-    const data = bookedAtData.data.formattedBookings;
-
+    const data = bookedAtData.data.booking;
     return data;
   } catch (error) {
-    const errorData = await response.json();
-    alert(errorData.errorMessage);
+    console.log("error:" + error);
+    alert("서버 오류, 재로그인 후 동일할 경우 관리자에게 문의바랍니다.");
   }
+}
+
+/** 펫시터의 기존 예약일자는 달력에서 비활성화 */
+async function getBookingSitters(sittierId, onloadchk) {
+  // 제외일자는 달력에서 비활성화되도록
+  const bookedAtList = await getBookedAtList(sittierId);
+
+  let bookedAtArr = [];
+  bookedAtList.forEach((x) => {
+    // 문자열을 Date 객체로 변환
+    const dateObject = new Date(x.bookedAt);
+
+    // Date 객체를 이용하여 원하는 형식으로 포맷
+    const formattedDate = `${dateObject.getFullYear()}-${(dateObject.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${dateObject.getDate().toString().padStart(2, "0")}`;
+    bookedAtArr.push(formattedDate);
+
+    console.log("formattedDate:" + formattedDate);
+  });
+
+  console.log("bookedAtArr:" + bookedAtArr);
+
+  // 이전에 생성된 datepicker 파괴
+  if (!onloadchk) {
+    $("#reservation-date").datepicker("destroy");
+  }
+
+  $("#reservation-date").datepicker({
+    format: "yyyy-mm-dd", //데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
+    startDate: "0d", //달력에서 선택 할 수 있는 가장 빠른 날짜. 이전으로는 선택 불가능 ( d : 일 m : 달 y : 년 w : 주)
+    datesDisabled: bookedAtArr, //선택 불가능한 일 설정 하는 배열 위에 있는 format 과 형식이 같아야함.
+    autoclose: true,
+    clearBtn: false,
+    disableTouchKeyboard: false,
+    language: "ko" //달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
+  });
 }
 
 /** 오늘날짜 yyyy-mm-dd로 변환 */
@@ -83,8 +118,6 @@ document.getElementById("cancel-button").addEventListener("click", function () {
   location.href = "main.html";
 });
 
-let bookedAtArr = [];
-
 /**페이지 로드시 프로필 정보 가져오기*/
 window.addEventListener("load", async (event) => {
   try {
@@ -92,31 +125,6 @@ window.addEventListener("load", async (event) => {
     // 예약 달력 일자 넣기
     const reservationDate = document.querySelector("#reservation-date");
     reservationDate.value = getCurrentFormattedDate();
-
-    // 제외일자는 달력에서 비활성화되도록
-    const bookedAtList = await getBookedAtList();
-
-    console.log("bookedAtList:" + bookedAtList[0]);
-    bookedAtList.forEach((x) => {
-      // 문자열을 Date 객체로 변환
-      const dateObject = new Date(x.bookedAt);
-
-      // Date 객체를 이용하여 원하는 형식으로 포맷
-      const formattedDate = `${dateObject.getFullYear()}-${(dateObject.getMonth() + 1)
-        .toString()
-        .padStart(2, "0")}-${dateObject.getDate().toString().padStart(2, "0")}`;
-      bookedAtArr.push(formattedDate);
-    });
-
-    $("#reservation-date").datepicker({
-      format: "yyyy-mm-dd", //데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
-      startDate: "-10d", //달력에서 선택 할 수 있는 가장 빠른 날짜. 이전으로는 선택 불가능 ( d : 일 m : 달 y : 년 w : 주)
-      datesDisabled: bookedAtArr, //선택 불가능한 일 설정 하는 배열 위에 있는 format 과 형식이 같아야함.
-      autoclose: true,
-      clearBtn: false,
-      disableTouchKeyboard: false,
-      language: "ko" //달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
-    });
 
     // 사용자 ID 가져오기
     const userId = await getUserId();
@@ -149,11 +157,14 @@ window.addEventListener("load", async (event) => {
       // 펫시터 초기값 구하기
       selectedOption = sitterSelect.options[0];
       selectedSitterId = selectedOption.value;
+
+      await getBookingSitters(selectedSitterId, 1);
     } else {
       const errorData = await response.json();
       alert(errorData.errorMessage);
     }
   } catch (error) {
+    console.log("error:" + error);
     alert("서버 오류, 재로그인 후 동일할 경우 관리자에게 문의바랍니다.");
 
     location.href = "../index.html";
@@ -167,13 +178,14 @@ let selectedOption;
 let selectedSitterId;
 
 // sitter-select에 change 이벤트 리스너를 추가합니다.
-sitterSelect.addEventListener("change", function () {
+sitterSelect.addEventListener("change", async function () {
   // 선택된 option 엘리먼트를 가져옵니다.
   const selectedOption = sitterSelect.options[sitterSelect.selectedIndex];
-  console.log(sitterSelect.selectedIndex);
 
   // 선택된 option의 id 속성을 가져옵니다.
   selectedSitterId = selectedOption.value;
+
+  await getBookingSitters(selectedSitterId, 0);
 });
 
 /** 예약 정보 저장 API */

@@ -12,12 +12,14 @@ const bookingsRepository = new BookingsRepository(prisma);
 const bookingsService = new BookingsService(bookingsRepository);
 const bookingsController = new BookingsController(bookingsService);
 
-
 // 신규 예약 생성
 router.post("/", AuthMiddleware, bookingsController.createBookingController);
 
 // 예약 전체 조회
 router.get("/", bookingsController.getBookingListController);
+
+// 예약 전체 조회
+router.get("/sitter/:sitterId", bookingsController.getBookingSitterController);
 
 // 예약 상세 조회
 router.get("/:bookingId", bookingsController.getBookingDetailController);
