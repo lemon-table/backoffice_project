@@ -29,6 +29,7 @@
       <div class="sort-buttons">
         <button class="btn btn-outline-secondary" id="sort-by-name">이름순</button>
         <button class="btn btn-outline-secondary" id="sort-by-popularity">인기순</button>
+        <button class="btn btn-outline-secondary" id="sort-by-review">리뷰순</button>
       </div>
 
       <!-- 펫시터 목록 테이블 -->
@@ -37,7 +38,8 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">이름</th>
-            <th scope="col">경력</th>
+            <th scope="col">서비스횟수</th>
+            <th scope="col">리뷰</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -75,14 +77,21 @@
         function displaySitters(data) {
           $("table tbody").empty(); // 테이블 초기화
           data.forEach(function (sitter, index) {
-            let stars = "";
+            let services = "";
             for (let i = 0; i < sitter.career; i++) {
+              services += "🐶";
+            }
+            let stars = "";
+            if (sitter.popScore === 0) stars += "없음";
+            for (let i = 0; i < sitter.popScore; i++) {
               stars += "⭐";
             }
+
             const sitterRow = `
         <tr>
           <th scope="row">${index + 1}</th>
           <td>${sitter.name}</td>
+          <td>${services}</td>
           <td>${stars}</td>
         </tr>`;
             $("table tbody").append(sitterRow);
@@ -98,6 +107,12 @@
         // 인기순(경력순) 정렬
         $("#sort-by-popularity").click(function () {
           sitters.sort((a, b) => b.career - a.career);
+          displaySitters(sitters);
+        });
+
+        // 리뷰순(펫시터별 리뷰 평균) 정렬
+        $("#sort-by-review").click(function () {
+          sitters.sort((a, b) => b.popScore - a.popScore);
           displaySitters(sitters);
         });
 
