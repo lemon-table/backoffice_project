@@ -27,12 +27,12 @@ export class BookingsService {
   };
 
   // 예약 전체 조회
-  getBookingListService = async (sort) => {
+  getBookingListService = async (sort, sitterId) => {
     const sortStr = sort ? sort.toLowerCase() : null;
     if (sortStr !== null && sortStr !== "desc" && sortStr !== "asc") {
       throw new Error("INVALID_SORT_ERROR");
     }
-    const bookings = await this.bookingsRepository.getBookingsRepo(sortStr);
+    const bookings = await this.bookingsRepository.getBookingsRepo(sortStr, sitterId);
 
     // 예약 전체 조회 화면에서 글번호, 예약 제목, 작성시간 출력
     const formattedBookings = bookings.map((booking) => ({
@@ -92,5 +92,14 @@ export class BookingsService {
     const deleteBooking = await this.bookingsRepository.deleteBookingRepo(userId, bookingId);
 
     return { deleteBooking };
+  };
+
+  // 예약 펫시터별 조회
+  getBookingSitterService = async (sitterId) => {
+    const booking = await this.bookingsRepository.getBookingSitterRepo(sitterId);
+    console.log({ booking });
+    if (!booking) throw new Error("BOOKING_NOT_FOUND_ERROR");
+
+    return { booking };
   };
 }

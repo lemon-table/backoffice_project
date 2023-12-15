@@ -77,4 +77,21 @@ export class BookingsRepository {
     });
     return deleteBooking;
   };
+
+  // 예약 조회(펫시터별)
+  getBookingSitterRepo = async (sitterId) => {
+    const bookingDetail = await this.prisma.bookings.findMany({
+      select: {
+        bookingId: true,
+        userId: true,
+        petsitters: { select: { name: true } },
+        title: true,
+        sitterId: true,
+        content: true,
+        bookedAt: true
+      },
+      where: { sitterId: +sitterId }
+    });
+    return bookingDetail;
+  };
 }
