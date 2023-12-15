@@ -29,6 +29,7 @@ export class SittersService {
         sitterId: sitter.sitterId,
         name: sitter.name,
         career: sitter.career,
+        popScore: +sitter.popScore,
         createdAt: sitter.createdAt,
         updatedAt: sitter.updatedAt
       };

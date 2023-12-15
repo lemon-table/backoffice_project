@@ -19,9 +19,23 @@ export class SittersRepository {
     }
   };
 
+  /*
   readAllSitters = async () => {
     const allSitters = await this.prisma.petsitters.findMany();
     return allSitters;
+  };*/
+
+  readAllSitters = async () => {
+    const readAllSitters = await this.prisma.$queryRaw`SELECT a.*, COALESCE(b.popScore, 0) as popScore
+      FROM petsitters a
+      LEFT JOIN (
+        SELECT b.sitterId, AVG(a.star) popScore
+        FROM reviews a
+        JOIN bookings b ON a.bookingId = b.bookingId
+        GROUP BY b.sitterId
+      ) b ON a.sitterId = b.sitterId`;
+
+    return readAllSitters;
   };
 
   readOneSitter = async (sitterId) => {
