@@ -148,7 +148,7 @@ window.addEventListener("load", async (event) => {
 
       getSitter.forEach((x) => {
         const option = document.createElement("option");
-        option.text = x.name + ", 경력: " + x.career + "년";
+        option.text = x.name + ", 서비스횟수: " + x.career + "번";
         option.value = x.sitterId;
 
         sitterSelect.add(option);
