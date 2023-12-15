@@ -52,7 +52,7 @@ export class BookingsService {
 
     return {
       bookingId: booking.bookingId,
-      nickname: booking.User.nickname,
+      nickname: booking.users.nickname,
       title: booking.title,
       sitterId: booking.sitterId,
       content: booking.content,
