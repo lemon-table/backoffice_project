@@ -15,15 +15,24 @@ body {
 .my-3 {
   margin-bottom: 3rem !important; /* 게시글 제목의 하단 여백 조절 */
 }
+
 .profile-edit-button {
   position: absolute;
   top: 20px;
   right: calc(5% + 50px);
   margin-right: 0;
 }
+
 .write-button {
   position: absolute;
   top: 20px;
   right: 20px;
   margin-right: 0;
+}
+
+.petsitter-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  margin-left: 0;
 }
