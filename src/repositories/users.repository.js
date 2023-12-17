@@ -46,7 +46,8 @@ export class UsersRepository {
         createdAt: true,
         users: {
           select: {
-            nickname: true
+            nickname: true,
+            email: true
           }
         }
       },
