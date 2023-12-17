@@ -84,4 +84,48 @@ export class UsersController {
       next(err);
     }
   };
+
+  /** 사용자 프로필 이미지 가져오기 */
+  getUserImage = async (req, res, next) => {
+    try {
+      const { userId } = req.user;
+
+      const user = await this.usersService.getUserImage(userId);
+
+      console.log("user" + user);
+
+      return res.status(StatusCodes.OK).json({
+        success: true,
+        message: "프로필 이미지를 조회했습니다.",
+        data: user
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  /** 사용자 프로필 수정 */
+  putUserImage = async (req, res, next) => {
+    try {
+      const { userId } = req.user;
+      // 이미지 데이터는 req.body에서 가져옵니다.
+      //const image = req.body.image;
+
+      const { image } = req.files;
+
+      // 이미지 데이터 확인
+      console.log("image:", image);
+
+      const user = await this.usersService.putUserImage(userId, image);
+
+      console.log("user" + user);
+
+      return res.status(StatusCodes.OK).json({
+        success: true,
+        message: "프로필 이미지를 수정했습니다."
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
 }

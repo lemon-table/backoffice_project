@@ -2,9 +2,33 @@ import bcrypt from "bcrypt";
 import validator from "validator";
 import jwt from "jsonwebtoken";
 import dotEnv from "dotenv";
+import multer from "multer";
+import fs from "fs";
+
+import { initializeApp } from "firebase/app";
+import { getStorage, ref, getDownloadURL, listAll, uploadBytes, deleteObject } from "firebase/storage";
 
 //.env에 있는 여러 값들을, prosess.env 객체 안에 추가하게 된다.
 dotEnv.config();
+
+// TODO: Replace the following with your app's Firebase project configuration
+// See: https://firebase.google.com/docs/web/learn-more#config-object
+const firebaseConfig = {
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBESE_PROJECT_ID,
+  storageBucket: process.env.FIREBESE_STORAGEBUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APPID,
+  measurementId: process.env.FIREBASE_MEASUREMENTID
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+// Initialize Cloud Storage and get a reference to the service
+const storage = getStorage();
 
 export class UsersService {
   constructor(usersRepository) {
@@ -85,5 +109,103 @@ export class UsersService {
     const updateUserInfo = await this.usersRepository.updateUserInfo(userId, name, age, gender, profileImage);
 
     return { updateUser };
+  };
+
+  getUserImage = async (userId) => {
+    const user = await this.usersRepository.readUser(userId);
+
+    // 프로필 상세정보 조회 안될 때
+    if (!user) throw new Error("USER_ID_NOT_FOUND_ERROR");
+
+    const listRef = ref(storage, "/backoffice/");
+    const chkStr = user.users.email;
+
+    let urls = [];
+
+    const listResult = await listAll(listRef);
+
+    await Promise.all(
+      listResult.items.map(async (itemRef) => {
+        const img_name = String(itemRef).split("/")[4];
+
+        if (img_name.includes(chkStr)) {
+          // 팀원 사진 가져오기
+          const url = await getDownloadURL(ref(storage, "/backoffice/" + img_name));
+          urls.push(url);
+        }
+      })
+    );
+    if (urls.length === 0) urls.push("../images/img2.png");
+
+    return urls;
+  };
+
+  putUserImage = async (userId, image) => {
+    const { filename, mimetype } = image;
+    const user = await this.usersRepository.readUser(userId);
+
+    // 프로필 상세정보 조회 안될 때
+    if (!user) throw new Error("USER_ID_NOT_FOUND_ERROR");
+
+    const userEmail = user.users.email;
+
+    console.log("user.userId:" + user.userId);
+    console.log("user.users.email:" + user.users.email);
+
+    //console.log("image.fs:" + image[0].path);
+    for (const pair of image.entries()) {
+      console.log(pair[0], pair[1]);
+    }
+
+    let metadata = {
+      contentType: image[0].mimetype
+    };
+
+    //const imageBuffer = require("fs").readFileSync(image[0].path);
+    //const imageBuffer = await fs.promises.readFile(image[0].path);
+    const imageBuffer = image[0].buffer;
+
+    const originalName = image[0].originalname;
+
+    // 파일 이름에서 마지막 마침표 이후의 문자열을 추출
+    const fileExtension = originalName.slice(((originalName.lastIndexOf(".") - 1) >>> 0) + 2);
+
+    //console.log("imageBuffer:" + imageBuffer);
+
+    const imageRef = ref(storage, "/backoffice/" + userEmail + "." + fileExtension);
+
+    const listRef = ref(storage, "/backoffice/");
+    const chkStr = userEmail;
+    let existImage = false;
+    let tempImageName = "";
+
+    console.log("chkStr:" + chkStr);
+
+    const listResult = await listAll(listRef);
+
+    await Promise.all(
+      listResult.items.map(async (itemRef) => {
+        const img_name = String(itemRef).split("/")[4];
+
+        //이미지 이름이 이메일명과 같을 때
+        if (img_name.includes(chkStr)) {
+          const fileExtensionImage = img_name.slice(((originalName.lastIndexOf(".") - 1) >>> 0) + 2);
+
+          //바꾸려는 이미지와 기존 있는 이미지 형식이 다르면
+          if (fileExtension !== fileExtensionImage) {
+            //기존 파일 지우기
+            const desertRef = ref(storage, "backoffice/" + img_name);
+
+            await deleteObject(desertRef);
+          }
+          existImage = true;
+          tempImageName = img_name;
+        }
+      })
+    );
+
+    await uploadBytes(imageRef, imageBuffer, metadata);
+
+    return user;
   };
 }
