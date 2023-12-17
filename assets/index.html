@@ -8,26 +8,31 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link href="style/user.css" rel="stylesheet" />
-    <title>아웃소싱 프로젝트</title>
+    <title>펫시터 매칭 서비스 🐶</title>
   </head>
   <body>
-    <main class="form-signin">
-      <form id="loginForm" method="post">
-        <img class="mb-4" src="images/rtan.png" alt="" width="72" height="72" />
-        <h1 class="h3 mb-3 fw-normal">로그인</h1>
+    <h1 class="h1 mb-3 fw-normal">펫시터 매칭 서비스 🐶</h1>
+    <div class="main-div">
+      <header class="header"></header>
+      <main class="form-signin">
+        <form id="loginForm" method="post">
+          <div class="horizontal-align">
+            <img class="mb-4" src="images/dogFoot.png" alt="" width="72" height="72" />
+            <h2 class="h3 mb-3 fw-normal">로그인</h2>
+          </div>
+          <div class="form-floating">
+            <input type="text" class="form-control" id="email" placeholder="이메일" />
+          </div>
+          <div class="form-floating">
+            <input type="password" class="form-control" id="password" placeholder="비밀번호" />
+          </div>
 
-        <div class="form-floating">
-          <input type="text" class="form-control" id="email" placeholder="이메일" />
-        </div>
-        <div class="form-floating">
-          <input type="password" class="form-control" id="password" placeholder="비밀번호" />
-        </div>
-
-        <button class="w-100 btn btn-lg btn-primary" type="submit" id="login">로그인</button>
-        <button type="button" class="btn btn-outline-secondary btn-sm" id="signup">회원가입</button>
-        <p class="mt-5 mb-3 text-muted">&copy; TEAMSPARTA</p>
-      </form>
-    </main>
+          <button class="w-100 btn btn-lg btn-primary" type="submit" id="login">로그인</button>
+          <button type="button" class="btn btn-outline-secondary btn-sm" id="signup">회원가입</button>
+          <p class="mt-5 mb-3 text-muted">&copy; TEAMSPARTA</p>
+        </form>
+      </main>
+    </div>
     <script>
       document.getElementById("signup").addEventListener("click", function () {
         location.href = "./html/signup.html";

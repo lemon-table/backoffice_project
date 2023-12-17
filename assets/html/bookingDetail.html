@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <link rel="stylesheet" href="../style/bootstrap-datepicker.css" />
-    <title>예약 상세 페이지</title>
+    <title>예약 작성 페이지</title>
     <style>
       body {
         padding-top: 40px;
@@ -21,12 +21,49 @@
       .form-group {
         text-align: left;
       }
+      .header-image {
+        height: 380px;
+        position: absolute; /* absolute로 설정 */
+        width: 100%; /* 가로 전체를 차지하도록 설정 */
+
+        background-image: url("../images/dog1.png");
+        background-size: cover;
+        background-position: center;
+
+        opacity: 0.2;
+
+        animation-name: scale-setting;
+        animation-duration: 5s;
+        animation-timing-function: linear;
+        /*베지어 주기 => 처음에 빨리 실행시킬지 or 나중에 빨리 실행시킬지 등 조절 가능 */
+        animation-iteration-count: infinite; /* 몇회 반복할것인가 */
+        transition: background-image 2s ease;
+        cursor: pointer;
+        z-index: 0;
+      }
+
+      @keyframes scale-setting {
+        0% {
+          transform: scale(1); /* 애니메이션이 0%만큼 동작시 */
+        }
+        100% {
+          transform: scale(1); /* 애니메이션이 100%만큼 동작시 */
+        }
+      }
     </style>
   </head>
   <body>
+    <div class="header-image"></div>
+    <div class="header">
+      <!-- 프로필 편집 버튼 -->
+      <!-- 헤더 -->
+      <header class="text-center my-5" id="header-image">
+        <h1>펫시터 매칭 서비스 🐶</h1>
+      </header>
+    </div>
     <div class="container">
       <header class="text-center my-5">
-        <h1 id="headerTitle"></h1>
+        <h2 id="headerTitle">~~님의 예약 작성 페이지</h2>
       </header>
 
       <!-- 예약 상세 폼 -->
@@ -55,7 +92,7 @@
           ></textarea>
         </div>
         <button type="submit" class="btn btn-primary" id="save-button">저장</button>
-        <button type="button" class="btn btn-secondary" id="cancel-button">취소</button>
+        <button type="button" class="btn btn-danger" id="cancel-button">뒤로</button>
       </form>
     </div>
 

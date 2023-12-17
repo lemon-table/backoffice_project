@@ -7,12 +7,19 @@
     <title>리뷰 작성 페이지</title>
     <style>
       body {
-        padding-top: 40px;
+        padding-top: 20px;
         background-color: #f5f5f5;
       }
       .container {
         text-align: center;
         position: relative;
+        display: flex;
+
+        margin-bottom: 8%;
+      }
+      .container form {
+        width: 600px;
+        margin-right: 20px;
       }
       .my-3 {
         margin-bottom: 3rem !important;
@@ -20,14 +27,60 @@
       .form-group {
         text-align: left;
       }
+      .card-body {
+        display: flex;
+        flex-direction: column;
+      }
+      .header-image {
+        height: 380px;
+        position: absolute; /* absolute로 설정 */
+        width: 100%; /* 가로 전체를 차지하도록 설정 */
+
+        background-image: url("../images/dog1.png");
+        background-size: cover;
+        background-position: center;
+
+        opacity: 0.2;
+
+        animation-name: scale-setting;
+        animation-duration: 5s;
+        animation-timing-function: linear;
+        /*베지어 주기 => 처음에 빨리 실행시킬지 or 나중에 빨리 실행시킬지 등 조절 가능 */
+        animation-iteration-count: infinite; /* 몇회 반복할것인가 */
+        transition: background-image 2s ease;
+
+        z-index: 0;
+
+        cursor: pointer;
+      }
+
+      #existing-review {
+        height: 300px;
+        width: 600px;
+      }
+
+      @keyframes scale-setting {
+        0% {
+          transform: scale(1); /* 애니메이션이 0%만큼 동작시 */
+        }
+        100% {
+          transform: scale(1); /* 애니메이션이 100%만큼 동작시 */
+        }
+      }
     </style>
   </head>
   <body>
-    <div class="container">
-      <header class="text-center my-5">
-        <h1 id="user-name">~~님의 리뷰 작성 페이지</h1>
+    <div class="header-image"></div>
+    <div class="header">
+      <!-- 헤더 -->
+      <header class="text-center my-5" id="header-image" onmouseover="changeCursor()" onmouseout="restoreCursor()">
+        <h1>펫시터 매칭 서비스 🐶</h1>
       </header>
-
+    </div>
+    <header class="text-center my-5">
+      <h2 id="user-name">~~님의 리뷰 작성 페이지</h2>
+    </header>
+    <div class="container">
       <!-- 리뷰 작성 폼 -->
       <form>
         <div class="form-group">
@@ -66,6 +119,7 @@
           </select>
         </div>
         <button type="submit" class="btn btn-primary">리뷰 저장</button>
+        <button type="button" class="btn btn-danger" id="back-button">뒤로</button>
       </form>
       <!-- 리뷰가 이미 존재할 경우 표시할 부분 -->
       <div id="existing-review" class="card mt-4" style="display: none">
@@ -77,7 +131,6 @@
         </div>
       </div>
     </div>
-
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -113,7 +166,11 @@
                 $("#existing-review").show();
               } else {
                 // 리뷰가 존재하지 않는 경우
-                $("#existing-review").hide();
+                /* 리뷰 없어도 공간 차지하도록 수정 23.12.18*/
+                //$("#existing-review").hide();
+
+                $("#existing-review-content").text("리뷰가 없습니다.");
+                $("#existing-review").show();
               }
             },
             error: function () {
@@ -200,6 +257,35 @@
             }
           });
         });
+      });
+
+      window.addEventListener("load", async (event) => {
+        //repeatScalingAnimation();
+        const scalingElement = document.querySelector(".header-image");
+
+        scalingElement.addEventListener("animationiteration", function () {
+          // 애니메이션 반복 시 배경 이미지 변경
+          const currentImage = scalingElement.style.backgroundImage;
+          let changeImageUrl = 'url("../images/dog1.png")';
+
+          if (currentImage.includes("dog1.png")) changeImageUrl = 'url("../images/dog2.png")';
+          else if (currentImage.includes("dog2.png")) changeImageUrl = 'url("../images/dog3.png")';
+          else scalingElement.style.backgroundImage = 'url("../images/dog1.png")';
+
+          scalingElement.style.backgroundImage = changeImageUrl;
+        });
+
+        // 페이지 로드 후 스케일 애니메이션 시작
+        scalingElement.classList.add("animated");
+      });
+      // 뒤로가기 버튼
+      document.getElementById("back-button").addEventListener("click", function () {
+        location.href = "main.html";
+      });
+
+      // 펫시터 매칭 서비스 제목 클릭시 메인페이지 이동
+      document.querySelector(".header-image").addEventListener("click", function () {
+        location.href = "main.html";
       });
     </script>
   </body>

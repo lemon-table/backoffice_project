@@ -50,6 +50,25 @@ async function getUserImage() {
   }
 }
 
+function repeatScalingAnimation() {
+  const scalingElement = document.querySelector(".header-image");
+
+  scalingElement.addEventListener("animationiteration", function () {
+    // 애니메이션 반복 시 배경 이미지 변경
+    const currentImage = scalingElement.style.backgroundImage;
+    let changeImageUrl = 'url("../images/dog1.png")';
+
+    if (currentImage.includes("dog1.png")) changeImageUrl = 'url("../images/dog2.png")';
+    else if (currentImage.includes("dog2.png")) changeImageUrl = 'url("../images/dog3.png")';
+    else scalingElement.style.backgroundImage = 'url("../images/dog1.png")';
+
+    scalingElement.style.backgroundImage = changeImageUrl;
+  });
+
+  // 페이지 로드 후 스케일 애니메이션 시작
+  scalingElement.classList.add("animated");
+}
+
 /**페이지 로드시 프로필 정보 가져오기*/
 window.addEventListener("load", async (event) => {
   try {
@@ -89,6 +108,9 @@ window.addEventListener("load", async (event) => {
           genderInput.checked = true;
         }
       }
+
+      // 배경 이미지 이벤트
+      repeatScalingAnimation();
     } else {
       const errorData = await response.json();
       alert(errorData.errorMessage);
@@ -220,4 +242,9 @@ document.querySelector("#uploadUserImage").addEventListener("change", async func
     alert("서버 오류, 재로그인 후 동일할 경우 관리자에게 문의바랍니다.");
     console.log("err:" + error);
   }
+});
+
+// 펫시터 매칭 서비스 제목 클릭시 메인페이지 이동
+document.querySelector(".header-image").addEventListener("click", function () {
+  location.href = "main.html";
 });
