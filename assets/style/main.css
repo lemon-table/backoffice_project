@@ -3,6 +3,13 @@ body {
   background-color: #f5f5f5;
 }
 
+h1 {
+  text-align: center; /* h1 텍스트를 가운데 정렬합니다. */
+  margin-top: 5%;
+  z-index: 1;
+  cursor: pointer;
+}
+
 .container {
   text-align: center; /* 중앙 정렬 */
   position: relative;
@@ -13,7 +20,7 @@ body {
 }
 
 .my-3 {
-  margin-bottom: 3rem !important; /* 게시글 제목의 하단 여백 조절 */
+  margin-bottom: 1rem !important; /* 게시글 제목의 하단 여백 조절 */
 }
 
 .profile-edit-button {
@@ -35,4 +42,44 @@ body {
   top: 20px;
   left: 20px;
   margin-left: 0;
+}
+
+footer {
+  width: 95%;
+  height: 30px; /* 내용물에 따라 알맞는 값 설정 */
+  bottom: 0px;
+  position: absolute;
+  text-align: right;
+
+  margin-bottom: 0.4%;
+}
+
+.header-image {
+  height: 380px;
+  position: absolute; /* absolute로 설정 */
+  width: 100%; /* 가로 전체를 차지하도록 설정 */
+
+  background-image: url("../images/dog1.png");
+  background-size: cover;
+  background-position: center;
+
+  opacity: 0.2;
+
+  animation-name: scale-setting;
+  animation-duration: 5s;
+  animation-timing-function: linear;
+  /*베지어 주기 => 처음에 빨리 실행시킬지 or 나중에 빨리 실행시킬지 등 조절 가능 */
+  animation-iteration-count: infinite; /* 몇회 반복할것인가 */
+  transition: background-image 2s ease;
+
+  z-index: 0;
+}
+
+@keyframes scale-setting {
+  0% {
+    transform: scale(1); /* 애니메이션이 0%만큼 동작시 */
+  }
+  100% {
+    transform: scale(1); /* 애니메이션이 100%만큼 동작시 */
+  }
 }

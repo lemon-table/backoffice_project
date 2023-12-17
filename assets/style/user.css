@@ -1,26 +1,42 @@
 html,
 body {
   height: 100%;
-  padding-top: 40px; /* 헤더와 내용 간의 간격 조절 */
+  padding-top: 10px; /* 헤더와 내용 간의 간격 조절 */
 }
 
 body {
-  display: flex;
   align-items: center;
   padding-top: 40px;
   padding-bottom: 40px;
   background-color: #f5f5f5;
+
+  /*background-image: url("../images/dog1.png"); */ /* 배경 이미지 경로를 수정하세요. */
+  background-size: cover;
+  background-position: center;
+}
+
+h1 {
+  text-align: center; /* h1 텍스트를 가운데 정렬합니다. */
+  margin-top: 5%;
+}
+
+h2 {
+  margin-top: 9%;
+  margin-left: 18.3%;
+  text-align: center; /* 텍스트를 가운데 정렬합니다. */
+  align-items: center;
+}
+
+.main-div {
+  display: flex;
+  /* 기타 필요한 스타일 */
 }
 
 .form-signin {
   width: 100%;
-  max-width: 330px;
-  padding: 15px;
+  max-width: 400px;
+  padding: 5px;
   margin: auto;
-}
-
-.form-signin .checkbox {
-  font-weight: 400;
 }
 
 .form-signin .form-floating:focus-within {
@@ -59,13 +75,42 @@ body {
 .header {
   /* 헤더 */
   text-align: center;
-  position: absolute;
   margin-bottom: 5rem !important; /* 헤더의 하단 여백 조절 */
   margin-top: 20px;
+  height: 600px;
+  width: 50%;
+
+  background-image: url("../images/dog1.png");
+  background-size: cover;
+  background-position: center;
+
+  margin-left: 5%;
+  opacity: 0.6;
+
+  animation-name: scale-setting;
+  animation-duration: 5s;
+  animation-timing-function: linear;
+  /*베지어 주기 => 처음에 빨리 실행시킬지 or 나중에 빨리 실행시킬지 등 조절 가능 */
+  animation-iteration-count: infinite; /* 몇회 반복할것인가 */
+  transition: background-image 2s ease;
+}
+
+.horizontal-align {
+  display: flex;
+  /* 기타 필요한 스타일 */
 }
 
 .profile-edit-button {
   position: absolute;
   top: 20px;
   right: 20px;
+}
+
+@keyframes scale-setting {
+  0% {
+    transform: scale(0.93); /* 애니메이션이 0%만큼 동작시 */
+  }
+  100% {
+    transform: scale(1); /* 애니메이션이 100%만큼 동작시 */
+  }
 }

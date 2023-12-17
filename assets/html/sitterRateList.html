@@ -17,9 +17,14 @@
       .sort-buttons {
         margin-bottom: 20px;
       }
+      #close-button {
+        float: right;
+        margin-right: 50px;
+      }
     </style>
   </head>
   <body>
+    <button class="btn btn-danger" id="close-button">닫기</button>
     <div class="container">
       <header class="text-center my-5">
         <h1>펫시터 목록</h1>
@@ -118,6 +123,10 @@
 
         // 페이지 로드 시 펫시터 목록 불러오기
         loadSitters();
+
+        document.getElementById("close-button").addEventListener("click", function () {
+          window.close(); // 팝업 창 닫기
+        });
       });
     </script>
   </body>

@@ -9,95 +9,121 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link href="../style/style.css" rel="stylesheet" />
     <style>
-      /* 이미지 크기 조절 */
-      #profileImagePreview {
-        max-width: 500px;
-        max-height: 600px;
-        margin-top: 10px;
+      h1 {
+        margin-bottom: 100px;
       }
       .profile {
         width: 400px;
         height: 400px;
 
         border-radius: 10%;
+        background-size: cover;
+        background-position: center;
 
         border: 2px solid #f5f5f5;
 
-        /*background-image: url("../images/img2.png");*/
-        background-position: center;
-        background-size: cover;
-
         cursor: pointer;
       }
+      #profileForm {
+        display: flex;
+        width: 1000px;
+      }
+      .horizontal-align {
+        margin-left: 100px;
+        margin-right: 30px;
+        width: 1200px;
+      }
+      .header-image {
+        height: 380px;
+        position: absolute; /* absolute로 설정 */
+        width: 100%; /* 가로 전체를 차지하도록 설정 */
+
+        background-image: url("../images/dog1.png");
+        background-size: cover;
+        background-position: center;
+
+        opacity: 0.2;
+
+        animation-name: scale-setting;
+        animation-duration: 5s;
+        animation-timing-function: linear;
+        /*베지어 주기 => 처음에 빨리 실행시킬지 or 나중에 빨리 실행시킬지 등 조절 가능 */
+        animation-iteration-count: infinite; /* 몇회 반복할것인가 */
+        transition: background-image 2s ease;
+
+        z-index: 0;
+        cursor: pointer;
+      }
+
+      @keyframes scale-setting {
+        0% {
+          transform: scale(1); /* 애니메이션이 0%만큼 동작시 */
+        }
+        100% {
+          transform: scale(1); /* 애니메이션이 100%만큼 동작시 */
+        }
+      }
     </style>
-    <title>아웃소싱 프로젝트</title>
+    <title>펫시터 매칭 서비스 🐶</title>
   </head>
   <body>
+    <div class="header-image"></div>
+    <div class="header">
+      <!-- 헤더 -->
+      <header class="text-center my-5" id="header-image">
+        <h1 id="header-title">펫시터 매칭 서비스 🐶</h1>
+      </header>
+    </div>
     <div class="container mt-5">
-      <div class="row justify-content-center">
+      <div class="row justify-content-start">
         <div class="col-md-6">
           <h2 class="mb-4">프로필 편집</h2>
 
           <!-- 프로필 편집 폼 -->
           <form class="profile-form" id="profileForm" method="post">
-            <div class="form-group">
-              <div class="profile" id="userImage"></div>
-              <input type="file" id="uploadUserImage" accept="image/*" style="display: none" />
-            </div>
-
-            <div class="form-group">
-              <label for="nickname">닉네임</label>
-              <input type="text" class="form-control" id="nickname" />
-            </div>
-
-            <div class="form-group">
-              <label for="username">사용자 이름</label>
-              <input type="text" class="form-control" id="username" />
-            </div>
-
-            <div class="form-group">
-              <label>성별</label>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="gender" id="male" value="M" />
-                <label class="form-check-label" for="M">남성</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="gender" id="female" value="W" />
-                <label class="form-check-label" for="W">여성</label>
+            <div class="horizontal-align">
+              <div class="form-group">
+                <div class="profile" id="userImage"></div>
+                <input type="file" id="uploadUserImage" accept="image/*" style="display: none" />
               </div>
             </div>
 
-            <div class="form-group">
-              <label for="age">나이</label>
-              <input type="number" class="form-control" id="age" />
-            </div>
+            <div class="horizontal-align">
+              <div class="form-group">
+                <label for="nickname">닉네임</label>
+                <input type="text" class="form-control" id="nickname" />
+              </div>
 
-            <button type="submit" class="btn btn-primary">저장</button>
-            <button type="button" class="btn btn-secondary" id="cancelBtn">취소</button>
+              <div class="form-group">
+                <label for="username">사용자 이름</label>
+                <input type="text" class="form-control" id="username" />
+              </div>
+
+              <div class="form-group">
+                <label>성별</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="gender" id="male" value="M" />
+                  <label class="form-check-label" for="M">남성</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="gender" id="female" value="W" />
+                  <label class="form-check-label" for="W">여성</label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="age">나이</label>
+                <input type="number" class="form-control" id="age" />
+              </div>
+
+              <button type="submit" class="btn btn-primary">저장</button>
+              <button type="button" class="btn btn-secondary" id="cancelBtn">취소</button>
+            </div>
           </form>
           <!-- 프로필 편집 폼 끝 -->
         </div>
       </div>
     </div>
-    <script>
-      // 이미지 미리보기 함수
-      function previewImage() {
-        const input = document.getElementById("profileImage");
-        const preview = document.getElementById("profileImagePreview");
-        const file = input.files[0];
-        const reader = new FileReader();
-
-        reader.onloadend = function () {
-          preview.src = reader.result;
-        };
-
-        if (file) {
-          reader.readAsDataURL(file);
-        } else {
-          preview.src = "";
-        }
-      }
-    </script>
     <script type="module" src="/script/profile.js"></script>
     <script>
       document.getElementById("cancelBtn").addEventListener("click", function () {
